@@ -32,9 +32,10 @@ We expect the other messages to be processed (10 in total), but only 1 is proces
 Update the Worker.cs L:25 to set the prefetch count to 0:
 
 ```csharp
-var processor = client.CreateProcessor("subscription1", new ServiceBusProcessorOptions
+await using var processor = _serviceBusClient.CreateProcessor(topic, subscription, new ServiceBusProcessorOptions()
 {
-    PrefetchCount = 0
+    PrefetchCount = 0,
+    AutoCompleteMessages = false
 });
 ```
 
