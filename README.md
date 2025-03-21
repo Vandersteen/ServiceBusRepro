@@ -25,3 +25,17 @@ info: ServiceBusRepro.Worker[0]
 ```
 
 We expect the other messages to be processed (10 in total), but only 1 is processed and the processor is stuck.
+
+
+## Working when prefetch count is 0
+
+Update the Worker.cs L:25 to set the prefetch count to 0:
+
+```csharp
+var processor = client.CreateProcessor("subscription1", new ServiceBusProcessorOptions
+{
+    PrefetchCount = 0
+});
+```
+
+Run the project again, notice the 10 messages now are processed correctly.
